@@ -53,6 +53,7 @@ const CartItem = ({ item }) => {
 						>
 							<Trash />
 						</button>
+						
 					</div>
 				</div>
 			</div>
