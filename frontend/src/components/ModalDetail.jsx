@@ -1,11 +1,14 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-// eslint-disable-next-line no-unused-vars
-import React, { useState , useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import { MdOutlineArrowDropDown, MdOutlineClose, MdAdd } from "react-icons/md";
 import { useUserStore } from "../stores/useUserStore";
 import { useCartStore } from "../stores/useCartStore";
 import toast from "react-hot-toast";
+
+// Đảm bảo Modal được set up đúng
+Modal.setAppElement('#root'); // Thêm dòng này nếu chưa có
 
 function ModalDetail({ product }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,7 +31,11 @@ function ModalDetail({ product }) {
   };
 
   useEffect(() => {
-    const closeOnEscapeKey = e => e.key === "Escape" ? handleCloseModal() : null;
+    const closeOnEscapeKey = (e) => {
+      if (e.key === "Escape") {
+        handleCloseModal();
+      }
+    };
     document.body.addEventListener("keydown", closeOnEscapeKey);
     return () => {
       document.body.removeEventListener("keydown", closeOnEscapeKey);
@@ -49,64 +56,73 @@ function ModalDetail({ product }) {
   };
 
   return (
-    <button onClick={handleOpenModal}>
-        <MdOutlineArrowDropDown size={50} />
-        <Modal
+    <>
+      <button onClick={handleOpenModal}>
+        <div className="flex items-center gap-2">
+          <MdOutlineArrowDropDown size={30} />
+          <p>Details</p>
+        </div>
+      </button>
+      <Modal
         isOpen={isModalOpen}
         onRequestClose={handleCloseModal}
+        shouldCloseOnOverlayClick={true}
         style={{
           overlay: {
-            backgroundColor: "transparent",
-            zIndex : "9997",
-            position : "fixed"
+            backgroundColor: "rgba(0,0,0,0.5)", // Thêm opacity để dễ click đóng
+            zIndex: 9997,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
           },
           content: {
-            top: "50%",
-            left: "50%",
-            right: "auto",
-            bottom: "auto",
-            marginRight: "-50%",
-            transform: "translate(-50%, -50%)",
-            overflow: "auto",
-            backgroundColor: "transparent",
-            outline: "none",
-            border: "none",
-            transition: "opacity 300ms ease-in-out",
-            duration: "3000ms",
-            zIndex : "9999"
+            position: 'relative',
+            top: 'auto',
+            left: 'auto',
+            right: 'auto',
+            bottom: 'auto',
+            padding: 0,
+            border: 'none',
+            background: 'transparent',
+            borderRadius: '8px',
+            maxWidth: '550px',
+            width: '100%',
+            margin: 'auto',
           },
         }}
       >
-        <div className="relative w-auto mx-auto overflow-hidden rounded-md" onClick={handleOverlayClick}>
-          <div className="relative flex-auto duration-300 transform bg-zinc-900 drop-shadow-md">
-            <div className="relative h-[450px] w-[550px]">
+        <div 
+          className="relative w-full mx-auto overflow-hidden rounded-md"
+          onClick={handleOverlayClick}
+        >
+          <div className="relative flex-auto duration-300 transform bg-zinc-900 drop-shadow-md rounded-md">
+            <div className="relative h-[450px] w-full">
               <img
                 className="h-[60%] w-full object-cover"
                 src={product.image}
+                alt={product.name}
               />
-              <div className='absolute inset-0 bg-black bg-opacity-20' />
-              <div className="absolute flex items-center justify-center w-6 h-6 bg-black rounded-full cursor-pointer top-3 right-3 bg-opacity-60">
-                <MdOutlineClose
-                  onClick={handleCloseModal}
-                  className="text-white"
-                  size={18}
-                />
-              </div>
+              <button 
+                onClick={handleCloseModal} 
+                className="absolute flex items-center justify-center w-8 h-8 bg-black rounded-full cursor-pointer top-3 right-3 bg-opacity-60 hover:bg-opacity-80 transition-all"
+              >
+                <MdOutlineClose className="text-white" size={20} />
+              </button>
               <div className="absolute left-5 top-[40%] w-[80%]">
                 <p className="text-2xl text-emerald-400 font-bold font-roboto-slab mb-3">
                   {product.name}
                 </p>
                 <div className="flex flex-row items-center gap-4">
                   <button
-                    className="flex items-center justify-center rounded-lg bg-emerald-600 px-5 py-2.5 text-center text-sm font-medium
-					 	text-white hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-300"
+                    className="flex items-center justify-center rounded-lg bg-emerald-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-300"
                     onClick={handleAddToCart}
                   >
                     <MdAdd size={22} className="mr-2" />
+                    Add to Cart
                   </button>
                 </div>
               </div>
-              <div className="py-[20px] text-white px-[20px] flex flex-col justify-around ">
+              <div className="py-[20px] text-white px-[20px] flex flex-col justify-around">
                 <p>
                   <span className="text-blue-500 font-bold italic">Price:</span>{" "}
                   ${product.price}
@@ -122,7 +138,7 @@ function ModalDetail({ product }) {
           </div>
         </div>
       </Modal>
-      </button>
+    </>
   );
 }
 

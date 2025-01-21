@@ -39,15 +39,13 @@ const ProductCard = ({ product }) => {
 						onClick={handleAddToCart}
 				>
 						<ShoppingCart size={22} className='mr-2' />
-						Add to cart
+						Add 
 					</button>
 					<button
 						className='flex items-center justify-center rounded-lg bg-emerald-600 px-5 py-2.5 text-center text-sm font-medium
 					 	text-white hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-300'
 				>
 						<ModalDetail product={product}/>
-						Details
-						
 					</button>
 				</div>
 			</div>

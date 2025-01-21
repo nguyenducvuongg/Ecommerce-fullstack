@@ -6,7 +6,7 @@ import CartItem from "../components/CartItem";
 import PeopleAlsoBought from "../components/PeopleAlsoBought";
 import OrderSummary from "../components/OrderSummary";
 import GiftCouponCard from "../components/GiftCouponCard";
-import BtnCheckOut from "../components/BtnCheckOut";
+import BtnCheckOut from "../components/btnCheckOut";
 
 const CartPage = () => {
 	const { cart } = useCartStore();
