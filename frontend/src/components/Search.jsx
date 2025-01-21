@@ -44,11 +44,11 @@ const Search = () => {
   };
 
   return (
-    <div className="relative w-1/4 max-w-md mx-auto">
+    <div className="relative w-[40%] max-w-md mx-auto">
       <div className="relative">
         <input
           type="text"
-          placeholder="Searching..."
+          placeholder="Search..."
           value={searchTerm}
           onChange={(e) => handleSearch(e.target.value)}
           className="w-full px-4 py-2 pl-10 text-white bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
@@ -78,8 +78,8 @@ const Search = () => {
                 key={product._id}
                 whileHover={{ scale: 1.02 }}
                 className="flex items-center p-3 border-b border-gray-700 hover:bg-gray-700 cursor-pointer"
-                onClick={() => <ModalDetail product={product} />}
               >
+                
                 <img 
                   src={product.image} 
                   alt={product.name} 
@@ -95,6 +95,7 @@ const Search = () => {
                   <span className="text-emerald-400 font-bold">
                     ${product.price}
                   </span>
+                  <ModalDetail product={product}/> 
                 </div>
               </motion.div>
             ))
