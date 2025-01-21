@@ -6,7 +6,7 @@ import LoginPage from "./pages/LoginPage";
 import AdminPage from "./pages/AdminPage";
 import CategoryPage from "./pages/CategoryPage";
 
-import Navbar from "./components/Navbar";
+import Navbar from "./components/navbar/Navbar";
 import { Toaster } from "react-hot-toast";
 import { useUserStore } from "./stores/useUserStore";
 import { useEffect } from "react";
@@ -17,6 +17,7 @@ import PurchaseSuccessPage from "./pages/PurchaseSuccessPage";
 import PurchaseCancelPage from "./pages/PurchaseCancelPage";
 import Footer from "./components/Footer";
 import CheckoutPage from "./pages/CheckOutPage";
+import UserProfilePage from "./pages/UserProfilePage";
 
 function App() {
 	const { user, checkAuth, checkingAuth } = useUserStore();
@@ -55,6 +56,7 @@ function App() {
 					<Route path='/category/:category' element={<CategoryPage />} />
 					<Route path='/cart' element={user ? <CartPage /> : <Navigate to='/login' />} />
 					<Route path='/checkout' element={<CheckoutPage />} />
+					<Route path='/UserProfilePage' element={ <UserProfilePage />} />
 					<Route
 						path='/purchase-success'
 						element={user ? <PurchaseSuccessPage /> : <Navigate to='/login' />}

@@ -1,12 +1,22 @@
-import { ShoppingCart, UserPlus, LogIn, LogOut, Lock } from "lucide-react";
+import { ShoppingCart, UserPlus, LogIn, Lock } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useUserStore } from "../stores/useUserStore";
-import { useCartStore } from "../stores/useCartStore";
+import { useUserStore } from "../../stores/useUserStore";
+import { useCartStore } from "../../stores/useCartStore";
+import NavAccMenu from "./NavbarAcc";
+import { useState, useCallback } from "react";
+import { BsChevronDown } from 'react-icons/bs';
+import Avatar from '../../../public/avatar.png';
+import Search from "../Search";
 
 const Navbar = () => {
-	const { user, logout } = useUserStore();
+	const { user } = useUserStore();
 	const isAdmin = user?.role === "admin";
 	const { cart } = useCartStore();
+	const [showAcc, setShowAcc] = useState(false);
+
+    const toggleShowAcc = useCallback(() => {
+        setShowAcc((current) => !current);
+    }, []);
 
 	return (
 		<header className='fixed top-0 left-0 w-full bg-gray-900 bg-opacity-90 backdrop-blur-md shadow-lg z-40 transition-all duration-300 border-b border-emerald-800'>
@@ -16,14 +26,8 @@ const Navbar = () => {
 						E-Commerce
 					</Link>
 
-					<nav className='flex flex-wrap items-center gap-4'>
-						<Link
-							to={"/"}
-							className='text-gray-300 hover:text-emerald-400 transition duration-300
-					 ease-in-out'
-						>
-							Home
-						</Link>
+					<nav className='flex flex-row items-center ml-auto gap-7'>
+						<Search />
 						{user && (
 							<Link
 								to={"/cart"}
@@ -54,14 +58,13 @@ const Navbar = () => {
 						)}
 
 						{user ? (
-							<button
-								className='bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 
-						rounded-md flex items-center transition duration-300 ease-in-out'
-								onClick={logout}
-							>
-								<LogOut size={18} />
-								<span className='hidden sm:inline ml-2'>Log Out</span>
-							</button>
+							<div onClick={toggleShowAcc} className='relative flex flex-row items-center gap-2 cursor-pointer'>
+							<div className='w-4 h-4 overflow-hidden rounded-md lg:w-8 lg:h-8'>
+								<img src={Avatar} alt="" />
+							</div>
+							<BsChevronDown className={`text-white transition ${showAcc ? 'rotate-180' : 'rotate-0'}`} />
+							<NavAccMenu visible={showAcc} />
+						</div>
 						) : (
 							<>
 								<Link
