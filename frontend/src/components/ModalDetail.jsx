@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import Modal from "react-modal";
 import { MdOutlineArrowDropDown, MdOutlineClose, MdAdd } from "react-icons/md";
 import { useUserStore } from "../stores/useUserStore";
@@ -21,6 +21,20 @@ function ModalDetail({ product }) {
     setIsModalOpen(false);
   };
 
+  const handleOverlayClick = (event) => {
+    if (event.target === event.currentTarget) {
+      handleCloseModal();
+    }
+  };
+
+  useEffect(() => {
+    const closeOnEscapeKey = e => e.key === "Escape" ? handleCloseModal() : null;
+    document.body.addEventListener("keydown", closeOnEscapeKey);
+    return () => {
+      document.body.removeEventListener("keydown", closeOnEscapeKey);
+    };
+  }, []);
+
   const truncateString = (str, num) => {
     return str?.length > num ? str.slice(0, num) + "..." : str;
   };
@@ -30,21 +44,21 @@ function ModalDetail({ product }) {
       toast.error("Please login to add products to cart", { id: "login" });
     } else {
       addToCart(product);
-      handleCloseModal(); // Close the modal after adding the product to the cart
+      handleCloseModal(); 
     }
   };
 
   return (
-    <div>
-      <button onClick={handleOpenModal}>
+    <button onClick={handleOpenModal}>
         <MdOutlineArrowDropDown size={50} />
-      </button>
-      <Modal
+        <Modal
         isOpen={isModalOpen}
         onRequestClose={handleCloseModal}
         style={{
           overlay: {
-            backgroundColor: "rgba(0,0,0,0.7)",
+            backgroundColor: "transparent",
+            zIndex : "9997",
+            position : "fixed"
           },
           content: {
             top: "50%",
@@ -59,17 +73,18 @@ function ModalDetail({ product }) {
             border: "none",
             transition: "opacity 300ms ease-in-out",
             duration: "3000ms",
-            zIndex: "9999",
+            zIndex : "9999"
           },
         }}
       >
-        <div className="relative w-auto mx-auto overflow-hidden rounded-md">
+        <div className="relative w-auto mx-auto overflow-hidden rounded-md" onClick={handleOverlayClick}>
           <div className="relative flex-auto duration-300 transform bg-zinc-900 drop-shadow-md">
             <div className="relative h-[450px] w-[550px]">
               <img
                 className="h-[60%] w-full object-cover"
                 src={product.image}
               />
+              <div className='absolute inset-0 bg-black bg-opacity-20' />
               <div className="absolute flex items-center justify-center w-6 h-6 bg-black rounded-full cursor-pointer top-3 right-3 bg-opacity-60">
                 <MdOutlineClose
                   onClick={handleCloseModal}
@@ -78,7 +93,7 @@ function ModalDetail({ product }) {
                 />
               </div>
               <div className="absolute left-5 top-[40%] w-[80%]">
-                <p className="w-full mb-4 text-base font-bold text-white md:text-xl lg:text-xl drop-shadow-xl">
+                <p className="text-2xl text-emerald-400 font-bold font-roboto-slab mb-3">
                   {product.name}
                 </p>
                 <div className="flex flex-row items-center gap-4">
@@ -107,7 +122,7 @@ function ModalDetail({ product }) {
           </div>
         </div>
       </Modal>
-    </div>
+      </button>
   );
 }
 
