@@ -22,7 +22,7 @@ const NavAccMenu = ({ visible }) => {
                 <hr className='h-px my-3 bg-gray-600 border-0' />
                 <div className='flex flex-col items-center w-full gap-3 px-3 group/item'>
                     <button
-						className='bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 w-[90%] rounded-md flex items-center transition duration-300 ease-in-out '
+						className='bg-gray-800 hover:bg-black text-white py-2 px-4 w-[90%] rounded-md flex items-center transition duration-300 ease-in-out '
 						onClick={logout}
 					>
 							<LogOut size={18} />
@@ -30,7 +30,7 @@ const NavAccMenu = ({ visible }) => {
 					</button>
                     <Link to="/UserProfilePage" className='w-[90%]'>
                     <button
-						className='bg-gray-700 hover:bg-gray-600 text-white w-[100%] py-2 px-4 
+						className='bg-gray-800 hover:bg-black text-white w-[100%] py-2 px-4 
 							rounded-md flex items-center transition duration-300 ease-in-out'
 					>
 							<User size={18} />
