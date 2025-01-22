@@ -5,7 +5,7 @@ import { useCartStore } from "../../stores/useCartStore";
 import NavAccMenu from "./NavbarAcc";
 import { useState, useCallback } from "react";
 import { BsChevronDown } from 'react-icons/bs';
-import Avatar from '../../Acsset/avatar.png';
+import Avatar from '../../../public/avatar.png';
 import Search from "../Search";
 
 const Navbar = () => {
