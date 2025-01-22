@@ -10,14 +10,8 @@ const Search = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
 
-  const { products, fetchAllProducts } = useProductStore();
+  const { products } = useProductStore();
 
-  // Fetch all products on component mount
-  useEffect(() => {
-    fetchAllProducts();
-  }, [fetchAllProducts]);
-
-  // Handle search
   const handleSearch = (term) => {
     setSearchTerm(term);
     setIsSearching(term.length > 0);
